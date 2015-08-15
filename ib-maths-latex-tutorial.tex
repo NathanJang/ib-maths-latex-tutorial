@@ -1,0 +1,147 @@
+% This line is a comment.
+% Lines beginning with `%' will be ignored by the compiler.
+
+% Here begins the preamble: stuff that (usually) won't be shown in the actual document but is needed to set up the document.
+
+% Declare the document class.
+% In this case, it's the custom class that I wrote for use in all my documents.
+% Found in `chan.cls' or https://gist.github.com/NathanJang/bf6c5f5080364b7811b5
+% Feel free to use in your own projects.
+\documentclass{chan}
+% Make the compiler load some useful external packages for extra functionality, to modify styling, etc.
+\usepackage{float, listings, parskip, url}
+
+% Declare the title.
+\title{\LaTeX\ Tutorial}
+% Declare the date.
+\date{2015-08-20}
+% Declare this document's author.
+%\author{Jonathan Chan}
+
+% The following declarations are features found only in my document class; ignore for other classes.
+% Declare an empty subtitle.
+\subtitle{}
+% Declare the school course for this document.
+\course{IB Mathematics HL}
+% Declare the course's instructor.
+\instructor{Ms. Huang}
+
+% Declare any other configuration stuff here.
+\lstset{language=TeX, basicstyle=\ttfamily}
+
+% Here ends the preamble.
+
+% Here begins the document body that will show up in print.
+\begin{document}
+
+% Output the title, generated from the configuration in the preamble.
+%\maketitle
+
+% Declare the abstract, a gist of the document.
+\abstract{How to write a document in \LaTeX.}
+
+% Make a new section.
+\section{Introduction}
+
+\LaTeX\ is a typesetting language that is widely used in academia, especially in Science and Mathematics.
+Every \LaTeX\ document is written in a text file, usually with a \texttt{.tex} file extension.
+You can then use a ``compiler'' to convert the text file to a PDF that you can print out or share.
+Because documents are written in text files, you can write your documents with a focus on content, and \LaTeX\ handles the formatting for you.
+It also means that you don't need any special programs to edit document; you can edit on any OS and compile it online if needed.
+
+Every document should be contained in its own folder, along with associated content like images.
+
+\subsection{Compiling}
+
+There is a compiler called ``MacTeX'' for integrated editing and compiling documents on Mac OS X.
+For now, we can use \url{https://sharelatex.com} to write and compile documents.
+
+\section{Basics}
+
+A \LaTeX\ command begins with a backslash (``\verb$\$''), followed by arguments surrounded by \verb${}$ immediately after.
+Options may optionally be included before the \{ in square brackets (``\verb$[]$'')
+
+\begin{lstlisting}
+\somecommand[options]{arguments}
+\end{lstlisting}
+
+A \LaTeX\ ``environment'' is like a command, but for longer content.
+
+\begin{lstlisting}
+\begin{someenvironment}
+content
+\end{someenvironment}
+\end{lstlisting}
+
+Every command has different usages, so it's important to read the documentation before using one.
+
+\subsection{Document Structure}
+
+Every document must start with a preamble, which includes stuff that configures the document and will not be displayed in the final document.
+Here is a sample preamble:
+
+\begin{lstlisting}
+\documentclass[a4paper]{article}
+\usepackage{apacite}
+
+\author{Justin LoXue}
+\date{2015-08-15}
+\title{Why Tortoises are Better than Turtles}
+\end{lstlisting}
+
+\subsubsection{Document Class}
+
+\lstinline$\documentclass{article}$ tells the compiler to use the \verb$article$ class.
+Every document must declare a class, which is a sort of template to use when compiling a document.
+The \verb$[a4paper]$ tells the \verb$article$ class to make the PDF with an A4 paper size.
+
+\subsubsection{Packages}
+
+You can load third-party packages with \lstinline$\usepackage{}$.
+Packages can be used to add extra functionality or change styling.
+\verb$apacite$ can be used to auto-format APA citations.
+
+Every package has different usage.
+You should read the documentation or examples online before using a package.
+
+\subsubsection{Metadata}
+
+You can use \lstinline$\author{}$, \lstinline$\date{}$, and \lstinline$\title{}$ to set the metadata for the document.
+
+\subsubsection{Document Environment}
+
+After the preamble, a document's content must be contained in a \verb$document$ environment.
+Optionally, you can (usually) add \lstinline$\maketitle$ at the top to generate a title from the preamble's metadata.
+
+\begin{lstlisting}
+\begin{document}
+\maketitle
+
+...
+\end{document}
+\end{lstlisting}
+
+To write normal paragraphs, simply type as usual in the \verb$document$ environment.
+Use 2 newlines to start a new paragraph (press enter twice).
+This usage is recommended:
+
+\begin{lstlisting}
+This is a paragraph.
+You should start each new sentence on a new line for better organisation.
+The compiler puts it all in the same paragraph.
+
+This is a second paragraph.
+\end{lstlisting}
+
+Gets you:
+
+This is a paragraph.
+You should start each new sentence on a new line for better organisation.
+The compiler puts it all in the same paragraph.
+
+This is a second paragraph.
+
+% Here ends the document.
+\end{document}
+
+% There must not be anything else after `\end{document}'.
