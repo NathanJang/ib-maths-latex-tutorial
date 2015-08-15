@@ -9,13 +9,14 @@
 % Feel free to use in your own projects.
 \documentclass{chan}
 % Make the compiler load some useful external packages for extra functionality, to modify styling, etc.
-\usepackage{float, listings, parskip, url}
+\usepackage{float, listings, longtable, parskip, upquote, url}
 
 % Declare the title.
 \title{\LaTeX\ Tutorial}
 % Declare the date.
 \date{2015-08-20}
 % Declare this document's author.
+% Commenting it out because the `chan.cls' class does it for me already, which is why I use it :)
 %\author{Jonathan Chan}
 
 % The following declarations are features found only in my document class; ignore for other classes.
@@ -44,12 +45,14 @@
 \section{Introduction}
 
 \LaTeX\ is a typesetting language that is widely used in academia, especially in Science and Mathematics.
-Every \LaTeX\ document is written in a text file, usually with a \texttt{.tex} file extension.
+Every \LaTeX\ document is written in a text file, usually with a \verb$.tex$ file extension.
 You can then use a ``compiler'' to convert the text file to a PDF that you can print out or share.
 Because documents are written in text files, you can write your documents with a focus on content, and \LaTeX\ handles the formatting for you.
 It also means that you don't need any special programs to edit document; you can edit on any OS and compile it online if needed.
 
 Every document should be contained in its own folder, along with associated content like images.
+
+If you're interested, this document was made in \LaTeX\ and its source can be found at \url{https://github.com/NathanJang/ib-maths-latex-tutorial}.
 
 \subsection{Compiling}
 
@@ -74,6 +77,11 @@ content
 \end{lstlisting}
 
 Every command has different usages, so it's important to read the documentation before using one.
+
+If you like, you can add ``comments'' to your \verb$.tex$ file.
+Comments are lines that can be saved in the source code of your document but will be ignored by the compiler and will not show up in the PDF.
+To do this, add a percent symbol (``\verb$%$'') at the beginning of a comments.
+The rest of the line will be hidden.
 
 \subsection{Document Structure}
 
@@ -140,6 +148,149 @@ You should start each new sentence on a new line for better organisation.
 The compiler puts it all in the same paragraph.
 
 This is a second paragraph.
+
+\section{Useful Functionality}
+
+For quotations \emph{don't} use the usual \verb$""$.
+Instead, use backtick(s) and apostrophe(s) for \verb$`single quotes'$ and \verb$``double quotes''$.
+
+\subsection{Typography}
+
+For the usual \textbf{bold}, \emph{italics} and \underline{underline}, refer to Table \ref{tab:styling}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c}
+type & mnemonic & command\\
+\hline
+\textbf{bold} & text boldface (bf) & \lstinline$\textbf{}$\\
+\emph{italics} & emphasis & \lstinline$\emph{}$\\
+\underline{underline} & underline & \lstinline$\underline{}$\\
+\end{tabular}
+\caption{Styling commands.}
+\label{tab:styling}
+\end{table}
+
+Note: it's suggested that you use \lstinline$\emph{}$ (italics) over the others because of readability, hence its name (\emph{emphasis}).
+
+\subsubsection{Fonts}
+
+There are 3 types of fonts here: \textrm{serif}, \textsf{sans-serif}, and \texttt{monospace}.
+You can use these fonts inline or apply them to the whole document according to Table \ref{tab:fonttable}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c}
+type & initialism & inline & whole document\\
+\hline
+\textrm{serif} & rm (Roman) & \lstinline$\textrm{}$ & \lstinline$\rmfamily$\\
+\textsf{sans-serif} & sf (sans-serif) & \lstinline$\textsf{}$ & \lstinline$\sffamily$\\
+\texttt{monospace} & tt (typewriter) & \lstinline$\texttt{}$ & \lstinline$\ttfamily$\\
+\end{tabular}
+\caption{Different font family commands.}
+\label{tab:fonttable}
+\end{table}
+
+If you're required to use Times New Roman, unfortunately it isn't available.
+However, you can use Times which is close enough, by adding \lstinline$\usepackage{times}$ to your preamble.
+\LaTeX's default font is allegedly optimised for readability.
+
+\subsection{Floats}
+
+``Floats'' are blocks of content that the compiler keeps together in one chunk on one page.
+These can be used on equations, tables, images, etc.
+They all use similar commands.
+
+\subsection{Mathematics}
+
+Mathematics mode is a different environment than the usual text mode where you type paragraphs and text.
+It provides special formatting and extra commands that cannot be used in text mode.
+\emph{Always remember to put maths in a maths environment.}
+
+By default, any letters you put in a maths environment will be italicised because the compiler thinks they're variables multiplied together.
+
+\lstinline$\[ \frac{time spent on essay}{time spent formatting document} \approx 0 \]$
+
+Gets you:
+
+\[ \frac{time spent on essay}{time spent formatting document} \approx 0 \]
+
+This is no good.
+
+You should put them in a \lstinline$\textrm{}$.
+
+\lstinline$\[ \frac{\textrm{time spent on essay}}{\textrm{time spent formatting document}} \approx 0 \]$
+
+Gets you:
+
+\[ \frac{\textrm{time spent on essay}}{\textrm{time spent formatting document}} \approx 0 \]
+
+\subsubsection{Inline}
+
+To add mathematics inline, put them in \lstinline$\(  \)$.
+
+\begin{lstlisting}
+What's the difference between you and I? \( u - i \).
+\end{lstlisting}
+
+Gets you:
+
+What's the difference between you and I? \( u - i \).
+
+\subsubsection{Block}
+
+In a block, maths will be centred and take up some vertical space.
+
+For quick usage put them in \lstinline$\[  \]$.
+
+\begin{lstlisting}
+\[ n = oi + ce \]
+\end{lstlisting}
+
+Gets you:
+
+\[ n = oi + ce \]
+
+For enhanced usage, put them in the \verb$equation$ environment.
+
+\begin{lstlisting}
+Equation \ref{eq:survival} almost describes how humanity is able to survive.
+
+\begin{equation}
+\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{i})
+= \frac{d}{dx} f(u)
+\label{eq:survival}
+\end{equation}
+\end{lstlisting}
+
+Gets you:
+
+Equation \ref{eq:survival} almost describes how humanity is able to survive.
+
+\begin{equation}
+\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{i})
+= \frac{d}{dx} f(u)
+\label{eq:survival}
+\end{equation}
+
+\subsubsection{Common Maths Commands}
+
+
+\begin{longtable}{c|c}
+symbol & command\\
+\hline
+\endhead
+\(\frac{a}{b}\) & \lstinline$\frac{a}{b}$\\
+\(\sqrt{x}\) & \lstinline$\sqrt{x}$\\
+\(\pi\) & \lstinline$\pi$\\
+\(x^n\) & \lstinline$x^n$\\
+\(x_1\) & \lstinline$x_1$\\
+\(\Sigma_{i=0}^n\) & \lstinline$\Sigma_{i=0}^n$\\
+\(\int_{i=0}^n\) & \lstinline$\int_{i=0}^n$\\
+\(\infty\) & \lstinline$\infty$\\
+\(\approx\) & \lstinline$\approx$\\
+\(\to\) & \lstinline$\to$\\
+\end{longtable}
 
 % Here ends the document.
 \end{document}
