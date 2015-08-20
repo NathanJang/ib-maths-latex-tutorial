@@ -9,7 +9,7 @@
 % Feel free to use in your own projects.
 \documentclass{chan}
 % Make the compiler load some useful external packages for extra functionality, to modify styling, etc.
-\usepackage{float, listings, longtable, parskip, upquote, url}
+\usepackage{float, graphicx, listings, longtable, parskip, tikz, upquote, url}
 
 % Declare the title.
 \title{\LaTeX\ Tutorial}
@@ -57,7 +57,7 @@ If you're interested, this document was made in \LaTeX\ and its source can be fo
 \subsection{Compiling}
 
 There is a compiler called ``MacTeX'' for integrated editing and compiling documents on Mac OS X.
-For now, we can use \url{https://sharelatex.com} to write and compile documents.
+For now, we can use \url{https://overleaf.com} to write and compile documents.
 
 \section{Basics}
 
@@ -71,16 +71,16 @@ Options may optionally be included before the \{ in square brackets (``\verb$[]$
 A \LaTeX\ ``environment'' is like a command, but for longer content.
 
 \begin{lstlisting}
-\begin{someenvironment}
+\begin{someenvironment}[options]
 content
 \end{someenvironment}
 \end{lstlisting}
 
-Every command has different usages, so it's important to read the documentation before using one.
+Every command has a different usage, so it's important to read the documentation before using one.
 
 If you like, you can add ``comments'' to your \verb$.tex$ file.
 Comments are lines that can be saved in the source code of your document but will be ignored by the compiler and will not show up in the PDF.
-To do this, add a percent symbol (``\verb$%$'') at the beginning of a comments.
+To do this, add a percent symbol (``\verb$%$'') at the beginning of a comment.
 The rest of the line will be hidden.
 
 \subsection{Document Structure}
@@ -135,7 +135,7 @@ This usage is recommended:
 
 \begin{lstlisting}
 This is a paragraph.
-You should start each new sentence on a new line for better organisation.
+You should put each sentence on a separate line for better organisation.
 The compiler puts it all in the same paragraph.
 
 This is a second paragraph.
@@ -144,7 +144,7 @@ This is a second paragraph.
 Gets you:
 
 This is a paragraph.
-You should start each new sentence on a new line for better organisation.
+You should put each sentence on a separate line for better organisation.
 The compiler puts it all in the same paragraph.
 
 This is a second paragraph.
@@ -156,44 +156,74 @@ Instead, use backtick(s) and apostrophe(s) for \verb$`single quotes'$ and \verb$
 
 \subsection{Typography}
 
-For the usual \textbf{bold}, \emph{italics} and \underline{underline}, refer to Table \ref{tab:styling}.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{c|c|c}
+\begin{longtable}{c|c|c}
 type & mnemonic & command\\
 \hline
+\endhead
 \textbf{bold} & text boldface (bf) & \lstinline$\textbf{}$\\
-\emph{italics} & emphasis & \lstinline$\emph{}$\\
+\emph{italics} & emphasis & \lstinline$\emph{}$ or \lstinline$\textit{}$\\
 \underline{underline} & underline & \lstinline$\underline{}$\\
-\end{tabular}
 \caption{Styling commands.}
 \label{tab:styling}
-\end{table}
+\end{longtable}
 
-Note: it's suggested that you use \lstinline$\emph{}$ (italics) over the others because of readability, hence its name (\emph{emphasis}).
+It's suggested that you use \lstinline$\emph{}$ (italics) over the others because of readability, hence its name (\emph{emphasis}).
 
 \subsubsection{Fonts}
 
 There are 3 types of fonts here: \textrm{serif}, \textsf{sans-serif}, and \texttt{monospace}.
-You can use these fonts inline or apply them to the whole document according to Table \ref{tab:fonttable}.
+You can use these fonts inline or apply them to the whole document.
 
-\begin{table}[h]
-\centering
-\begin{tabular}{c|c|c|c}
-type & initialism & inline & whole document\\
+\begin{longtable}{c|c|c|c}
+type & abbreviation & inline & whole document\\
 \hline
 \textrm{serif} & rm (Roman) & \lstinline$\textrm{}$ & \lstinline$\rmfamily$\\
 \textsf{sans-serif} & sf (sans-serif) & \lstinline$\textsf{}$ & \lstinline$\sffamily$\\
 \texttt{monospace} & tt (typewriter) & \lstinline$\texttt{}$ & \lstinline$\ttfamily$\\
-\end{tabular}
 \caption{Different font family commands.}
 \label{tab:fonttable}
-\end{table}
+\end{longtable}
 
 If you're required to use Times New Roman, unfortunately it isn't available.
 However, you can use Times which is close enough, by adding \lstinline$\usepackage{times}$ to your preamble.
 \LaTeX's default font is allegedly optimised for readability.
+
+\subsection{Lists}
+
+Use either the \verb$itemize$ or \verb$enumerate$ environment, and declare each point with \lstinline$\item$.
+You can nest them if you want.
+
+\begin{lstlisting}
+\begin{enumerate}
+\item A robot may not injure a human being or, through inaction,
+    allow a human being to come to harm.
+    \begin{itemize}
+    \item A similar 0th Law was later added:
+        A robot may not harm humanity, or, by inaction,
+        allow humanity to come to harm.
+    \end{itemize}
+\item A robot must obey the orders given it by human beings,
+    except when it conflicts with the first law.
+\item A robot must protect its own existence as long as
+    such protection does not conflict with the First or Second Laws.
+\end{enumerate}
+\end{lstlisting}
+
+Gets you:
+
+\begin{enumerate}
+\item A robot may not injure a human being or, through inaction,
+    allow a human being to come to harm.
+    \begin{itemize}
+    \item A similar 0th Law was later added:
+        A robot may not harm humanity, or, by inaction,
+        allow humanity to come to harm.
+    \end{itemize}
+\item A robot must obey the orders given it by human beings,
+    except when it conflicts with the first law.
+\item A robot must protect its own existence as long as
+    such protection does not conflict with the First or Second Laws.
+\end{enumerate}
 
 \subsection{Floats}
 
@@ -209,21 +239,21 @@ It provides special formatting and extra commands that cannot be used in text mo
 
 By default, any letters you put in a maths environment will be italicised because the compiler thinks they're variables multiplied together.
 
-\lstinline$\[ \frac{time spent on essay}{time spent formatting document} \approx 0 \]$
+\lstinline$\[ \frac{time spent formatting document}{time spent on essay} > 1 \]$
 
 Gets you:
 
-\[ \frac{time spent on essay}{time spent formatting document} \approx 0 \]
+\[ \frac{time spent formatting document}{time spent on essay} > 1 \]
 
 This is no good.
 
 You should put them in a \lstinline$\textrm{}$.
 
-\lstinline$\[ \frac{\textrm{time spent on essay}}{\textrm{time spent formatting document}} \approx 0 \]$
+\lstinline$\[ \frac{\textrm{time spent formatting document}}{\textrm{time spent on essay}} > 1 \]$
 
 Gets you:
 
-\[ \frac{\textrm{time spent on essay}}{\textrm{time spent formatting document}} \approx 0 \]
+\[ \frac{\textrm{time spent formatting document}}{\textrm{time spent on essay}} > 1 \]
 
 \subsubsection{Inline}
 
@@ -257,7 +287,7 @@ For enhanced usage, put them in the \verb$equation$ environment.
 Equation \ref{eq:survival} almost describes how humanity is able to survive.
 
 \begin{equation}
-\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{i})
+\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{\sqrt[n]{e^i}})
 = \frac{d}{dx} f(u)
 \label{eq:survival}
 \end{equation}
@@ -268,20 +298,21 @@ Gets you:
 Equation \ref{eq:survival} almost describes how humanity is able to survive.
 
 \begin{equation}
-\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{i})
+\lim_{i\to\infty} (\sqrt[n]{e^x} - \frac{1}{\sqrt[n]{e^i}})
 = \frac{d}{dx} f(u)
 \label{eq:survival}
 \end{equation}
 
 \subsubsection{Common Maths Commands}
 
-
 \begin{longtable}{c|c}
 symbol & command\\
 \hline
 \endhead
 \(\frac{a}{b}\) & \lstinline$\frac{a}{b}$\\
+\(\times\) & \lstinline$\times$\\
 \(\sqrt{x}\) & \lstinline$\sqrt{x}$\\
+\(\sqrt[n]{x}\) & \lstinline$\sqrt[n]{x}$\\
 \(\pi\) & \lstinline$\pi$\\
 \(x^n\) & \lstinline$x^n$\\
 \(x_1\) & \lstinline$x_1$\\
@@ -290,7 +321,290 @@ symbol & command\\
 \(\infty\) & \lstinline$\infty$\\
 \(\approx\) & \lstinline$\approx$\\
 \(\to\) & \lstinline$\to$\\
+\(f'(x)\) & \lstinline$f'(x)$\\
+\(f''(x)\) & \lstinline$f''(x)$\\
+\caption{Common maths commands.}
+\label{tab:mathscmd}
 \end{longtable}
+
+\section{Tables}
+
+\begin{lstlisting}
+Table \ref{tab:0118999} outlines the new emergency services number.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{r|c|l}
+right justified & centred & left justified\\
+\hline
+oh & one & one\\
+eight & nine & nine\\
+nine & eight & eight\\
+one & nine & nine\\
+nine & one & one\\
+nine & seven & two\\
+five & three & oh\\
+\end{tabular}
+\caption{0118999\ldots}
+\label{tab:0118999}
+\end{table}
+\end{lstlisting}
+
+Gets you:
+
+Table \ref{tab:0118999} outlines the new emergency services number.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{r|c|l}
+right justified & centred & left justified\\
+\hline
+oh & one & one\\
+eight & nine & nine\\
+nine & eight & eight\\
+one & nine & nine\\
+nine & one & one\\
+nine & seven & two\\
+five & three & oh\\
+\end{tabular}
+\caption{0118999\ldots}
+\label{tab:0118999}
+\end{table}
+
+\lstinline$\begin{table}[h]$ starts a table object (wrapper).
+\verb$h$ means approximately here.
+You can also use \verb$t$, \verb$b$, or \verb$H$ for top, bottom, or Here exactly, respectively.
+\lstinline$\centering$ means to centre the table on the page.
+
+\lstinline$\begin{tabular}{r|c|l}$ begins the actual table with content;
+\verb${r|c|l}$ means to align 3 columns right, centred, and left respectively.
+This must match the number of columns.
+(You can omit the bar (``\verb$|$'') to omit vertical lines on the table.)
+
+\lstinline$\hline$ draws a horizontal line (you can draw these on any row).
+
+\lstinline$oh & one & one$ is a row, with the ampersand (``\verb$&$'') separating columns.
+\lstinline$\\$ means a new row.
+
+At the end of the table, \lstinline$\caption{}$ puts a caption under the table.
+\lstinline$\label{}$ adds a reference identifier to this table that you can refer to with \lstinline$\ref{}$ outside the table.
+It's conventional to prefix \verb$tab:$ to table identifiers.
+\emph{Label must be after caption because of how the compiler counts stuff.}
+
+\section{Figures}
+
+Figures have the general form:
+
+\begin{lstlisting}
+\begin{figure}[h]
+...
+\caption{Caption text.}
+\label{fig:someidentifier}
+\end{figure}
+\end{lstlisting}
+
+similar to the \verb$table$ environment.
+
+\subsection{Images}
+
+\lstinline$\usepackage{graphicx}$ to include images.
+
+\begin{lstlisting}
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{deddit}
+\caption{It is indeed.}
+\label{fig:deddit}
+\end{figure}
+\end{lstlisting}
+
+Gets you:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{deddit}
+\caption{It is indeed.}
+\label{fig:deddit}
+\end{figure}
+
+Remember to add \lstinline$\centering$ if you want.
+
+See \url{https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics#Including_graphics} for additional options.
+
+\subsection{Drawing Geometrical Shapes}
+
+\lstinline$\usepackage{tikz}$ if you want prettier graphs than screenshots of Excel, but you can draw any lines with this.
+
+\subsubsection{Basics}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\draw (-1,3) -- (-1,0);
+\draw (1,3) -- (1,0);
+\draw (-2,0) -- (0,-2) -- (2,0);
+\end{tikzpicture}
+\end{figure}
+
+In \verb$tikz$, every command ends with a semicolon (``;'').
+The most basic command is \lstinline$\draw$, which draws straight lines defined by cartesian points.
+
+\lstinline$\draw (0,0) -- (1,1) -- (2,0);$ draws straight lines to connect all these points.
+
+\lstinline$\node at (0,0) {thing};$ puts the text ``thing'' at (0,0).
+
+There are more complicated commands for polygons, curves, etc., but for our purposes this is enough.
+
+\subsubsection{Graphs}
+
+\begin{lstlisting}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\draw [->] (0,0) -- (13,0) node [anchor=west] {\(t\)};
+\foreach \x in {2,4,...,20}
+    \draw (\x*0.6,1pt) -- (\x*0.6,-1pt) node [anchor=north] {\(\x\)};
+\draw [<->] (0,-5) -- (0,5) node [anchor=south] {\(y(t)\)};
+\foreach \y in {-100,-80,...,100}
+    \draw (1pt,\y/21) -- (-1pt,\y/21) node [anchor=east] {\(\y\)};
+
+\draw [->] (0.000,0.000) -- (0.060,-0.492) -- (0.120,-0.966) -- 
+(0.180,-1.417) -- (0.240,-1.842) -- (0.300,-2.237) -- (0.360,-2.597) -- 
+(0.420,-2.919) -- (0.480,-3.202) -- (0.540,-3.443) -- (0.600,-3.639) -- 
+(0.660,-3.791) -- (0.720,-3.898) -- (0.780,-3.959) -- (0.840,-3.976) -- 
+(0.900,-3.948) -- (0.960,-3.877) -- (1.020,-3.766) -- (1.080,-3.616) -- 
+(1.140,-3.431) -- (1.200,-3.212) -- (1.260,-2.963) -- (1.320,-2.688) -- 
+(1.380,-2.390) -- (1.440,-2.074) -- (1.500,-1.742) -- (1.560,-1.399) -- 
+(1.620,-1.050) -- (1.680,-0.698) -- (1.740,-0.346) -- (1.800,-0.000) -- 
+(1.860,0.338) -- (1.920,0.664) -- (1.980,0.974) -- (2.040,1.266) -- 
+(2.100,1.537) -- (2.160,1.785) -- (2.220,2.006) -- (2.280,2.201) -- 
+(2.340,2.366) -- (2.400,2.501) -- (2.460,2.606) -- (2.520,2.679) -- 
+(2.580,2.721) -- (2.640,2.732) -- (2.700,2.713) -- (2.760,2.665) -- 
+(2.820,2.588) -- (2.880,2.485) -- (2.940,2.358) -- (3.000,2.207) -- 
+(3.060,2.036) -- (3.120,1.847) -- (3.180,1.643) -- (3.240,1.425) -- 
+(3.300,1.197) -- (3.360,0.962) -- (3.420,0.722) -- (3.480,0.480) -- 
+(3.540,0.238) -- (3.600,0.000) -- (3.660,-0.232) -- (3.720,-0.456) -- 
+(3.780,-0.670) -- (3.840,-0.870) -- (3.900,-1.057) -- (3.960,-1.227) -- 
+(4.020,-1.379) -- (4.080,-1.513) -- (4.140,-1.626) -- (4.200,-1.719) -- 
+(4.260,-1.791) -- (4.320,-1.841) -- (4.380,-1.870) -- (4.440,-1.878) -- 
+(4.500,-1.865) -- (4.560,-1.832) -- (4.620,-1.779) -- (4.680,-1.708) -- 
+(4.740,-1.620) -- (4.800,-1.517) -- (4.860,-1.400) -- (4.920,-1.270) -- 
+(4.980,-1.129) -- (5.040,-0.979) -- (5.100,-0.823) -- (5.160,-0.661) -- 
+(5.220,-0.496) -- (5.280,-0.330) -- (5.340,-0.164) -- (5.400,-0.000) -- 
+(5.460,0.160) -- (5.520,0.313) -- (5.580,0.460) -- (5.640,0.598) -- 
+(5.700,0.726) -- (5.760,0.843) -- (5.820,0.948) -- (5.880,1.040) -- 
+(5.940,1.118) -- (6.000,1.182) -- (6.060,1.231) -- (6.120,1.265) -- 
+(6.180,1.285) -- (6.240,1.291) -- (6.300,1.282) -- (6.360,1.259) -- 
+(6.420,1.223) -- (6.480,1.174) -- (6.540,1.114) -- (6.600,1.043) -- 
+(6.660,0.962) -- (6.720,0.873) -- (6.780,0.776) -- (6.840,0.673) -- 
+(6.900,0.566) -- (6.960,0.454) -- (7.020,0.341) -- (7.080,0.227) -- 
+(7.140,0.112) -- (7.200,0.000) -- (7.260,-0.110) -- (7.320,-0.215) -- 
+(7.380,-0.316) -- (7.440,-0.411) -- (7.500,-0.499) -- (7.560,-0.579) -- 
+(7.620,-0.651) -- (7.680,-0.714) -- (7.740,-0.768) -- (7.800,-0.812) -- 
+(7.860,-0.846) -- (7.920,-0.870) -- (7.980,-0.883) -- (8.040,-0.887) -- 
+(8.100,-0.881) -- (8.160,-0.865) -- (8.220,-0.840) -- (8.280,-0.807) -- 
+(8.340,-0.765) -- (8.400,-0.717) -- (8.460,-0.661) -- (8.520,-0.600) -- 
+(8.580,-0.533) -- (8.640,-0.463) -- (8.700,-0.389) -- (8.760,-0.312) -- 
+(8.820,-0.234) -- (8.880,-0.156) -- (8.940,-0.077) -- (9.000,-0.000) -- 
+(9.060,0.075) -- (9.120,0.148) -- (9.180,0.217) -- (9.240,0.283) -- 
+(9.300,0.343) -- (9.360,0.398) -- (9.420,0.448) -- (9.480,0.491) -- 
+(9.540,0.528) -- (9.600,0.558) -- (9.660,0.581) -- (9.720,0.598) -- 
+(9.780,0.607) -- (9.840,0.610) -- (9.900,0.605) -- (9.960,0.595) -- 
+(10.02,0.578) -- (10.08,0.555) -- (10.14,0.526) -- (10.20,0.493) -- 
+(10.26,0.454) -- (10.32,0.412) -- (10.38,0.367) -- (10.44,0.318) -- 
+(10.50,0.267) -- (10.56,0.215) -- (10.62,0.161) -- (10.68,0.107) -- 
+(10.74,0.053) -- (10.80,0.000) -- (10.86,-0.052) -- (10.92,-0.102) -- 
+(10.98,-0.149) -- (11.04,-0.194) -- (11.10,-0.236) -- (11.16,-0.274) -- 
+(11.22,-0.308) -- (11.28,-0.337) -- (11.34,-0.363) -- (11.40,-0.384) -- 
+(11.46,-0.400) -- (11.52,-0.411) -- (11.58,-0.417) -- (11.64,-0.419) -- 
+(11.70,-0.416) -- (11.76,-0.409) -- (11.82,-0.397) -- (11.88,-0.381) -- 
+(11.94,-0.362) -- (12.00,-0.339);
+\end{tikzpicture}
+\caption{A plot of the bungee jumping model.}
+\label{fig:bungeeReal}
+\end{figure}
+\end{lstlisting}
+
+Gets you:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\draw [->] (0,0) -- (13,0) node [anchor=west] {\(t\)};
+\foreach \x in {2,4,...,20}
+    \draw (\x*0.6,1pt) -- (\x*0.6,-1pt) node [anchor=north] {\(\x\)};
+\draw [<->] (0,-5) -- (0,5) node [anchor=south] {\(y(t)\)};
+\foreach \y in {-100,-80,...,100}
+    \draw (1pt,\y/21) -- (-1pt,\y/21) node [anchor=east] {\(\y\)};
+
+\draw [->] (0.000,0.000) -- (0.060,-0.492) -- (0.120,-0.966) -- 
+(0.180,-1.417) -- (0.240,-1.842) -- (0.300,-2.237) -- (0.360,-2.597) -- 
+(0.420,-2.919) -- (0.480,-3.202) -- (0.540,-3.443) -- (0.600,-3.639) -- 
+(0.660,-3.791) -- (0.720,-3.898) -- (0.780,-3.959) -- (0.840,-3.976) -- 
+(0.900,-3.948) -- (0.960,-3.877) -- (1.020,-3.766) -- (1.080,-3.616) -- 
+(1.140,-3.431) -- (1.200,-3.212) -- (1.260,-2.963) -- (1.320,-2.688) -- 
+(1.380,-2.390) -- (1.440,-2.074) -- (1.500,-1.742) -- (1.560,-1.399) -- 
+(1.620,-1.050) -- (1.680,-0.698) -- (1.740,-0.346) -- (1.800,-0.000) -- 
+(1.860,0.338) -- (1.920,0.664) -- (1.980,0.974) -- (2.040,1.266) -- 
+(2.100,1.537) -- (2.160,1.785) -- (2.220,2.006) -- (2.280,2.201) -- 
+(2.340,2.366) -- (2.400,2.501) -- (2.460,2.606) -- (2.520,2.679) -- 
+(2.580,2.721) -- (2.640,2.732) -- (2.700,2.713) -- (2.760,2.665) -- 
+(2.820,2.588) -- (2.880,2.485) -- (2.940,2.358) -- (3.000,2.207) -- 
+(3.060,2.036) -- (3.120,1.847) -- (3.180,1.643) -- (3.240,1.425) -- 
+(3.300,1.197) -- (3.360,0.962) -- (3.420,0.722) -- (3.480,0.480) -- 
+(3.540,0.238) -- (3.600,0.000) -- (3.660,-0.232) -- (3.720,-0.456) -- 
+(3.780,-0.670) -- (3.840,-0.870) -- (3.900,-1.057) -- (3.960,-1.227) -- 
+(4.020,-1.379) -- (4.080,-1.513) -- (4.140,-1.626) -- (4.200,-1.719) -- 
+(4.260,-1.791) -- (4.320,-1.841) -- (4.380,-1.870) -- (4.440,-1.878) -- 
+(4.500,-1.865) -- (4.560,-1.832) -- (4.620,-1.779) -- (4.680,-1.708) -- 
+(4.740,-1.620) -- (4.800,-1.517) -- (4.860,-1.400) -- (4.920,-1.270) -- 
+(4.980,-1.129) -- (5.040,-0.979) -- (5.100,-0.823) -- (5.160,-0.661) -- 
+(5.220,-0.496) -- (5.280,-0.330) -- (5.340,-0.164) -- (5.400,-0.000) -- 
+(5.460,0.160) -- (5.520,0.313) -- (5.580,0.460) -- (5.640,0.598) -- 
+(5.700,0.726) -- (5.760,0.843) -- (5.820,0.948) -- (5.880,1.040) -- 
+(5.940,1.118) -- (6.000,1.182) -- (6.060,1.231) -- (6.120,1.265) -- 
+(6.180,1.285) -- (6.240,1.291) -- (6.300,1.282) -- (6.360,1.259) -- 
+(6.420,1.223) -- (6.480,1.174) -- (6.540,1.114) -- (6.600,1.043) -- 
+(6.660,0.962) -- (6.720,0.873) -- (6.780,0.776) -- (6.840,0.673) -- 
+(6.900,0.566) -- (6.960,0.454) -- (7.020,0.341) -- (7.080,0.227) -- 
+(7.140,0.112) -- (7.200,0.000) -- (7.260,-0.110) -- (7.320,-0.215) -- 
+(7.380,-0.316) -- (7.440,-0.411) -- (7.500,-0.499) -- (7.560,-0.579) -- 
+(7.620,-0.651) -- (7.680,-0.714) -- (7.740,-0.768) -- (7.800,-0.812) -- 
+(7.860,-0.846) -- (7.920,-0.870) -- (7.980,-0.883) -- (8.040,-0.887) -- 
+(8.100,-0.881) -- (8.160,-0.865) -- (8.220,-0.840) -- (8.280,-0.807) -- 
+(8.340,-0.765) -- (8.400,-0.717) -- (8.460,-0.661) -- (8.520,-0.600) -- 
+(8.580,-0.533) -- (8.640,-0.463) -- (8.700,-0.389) -- (8.760,-0.312) -- 
+(8.820,-0.234) -- (8.880,-0.156) -- (8.940,-0.077) -- (9.000,-0.000) -- 
+(9.060,0.075) -- (9.120,0.148) -- (9.180,0.217) -- (9.240,0.283) -- 
+(9.300,0.343) -- (9.360,0.398) -- (9.420,0.448) -- (9.480,0.491) -- 
+(9.540,0.528) -- (9.600,0.558) -- (9.660,0.581) -- (9.720,0.598) -- 
+(9.780,0.607) -- (9.840,0.610) -- (9.900,0.605) -- (9.960,0.595) -- 
+(10.02,0.578) -- (10.08,0.555) -- (10.14,0.526) -- (10.20,0.493) -- 
+(10.26,0.454) -- (10.32,0.412) -- (10.38,0.367) -- (10.44,0.318) -- 
+(10.50,0.267) -- (10.56,0.215) -- (10.62,0.161) -- (10.68,0.107) -- 
+(10.74,0.053) -- (10.80,0.000) -- (10.86,-0.052) -- (10.92,-0.102) -- 
+(10.98,-0.149) -- (11.04,-0.194) -- (11.10,-0.236) -- (11.16,-0.274) -- 
+(11.22,-0.308) -- (11.28,-0.337) -- (11.34,-0.363) -- (11.40,-0.384) -- 
+(11.46,-0.400) -- (11.52,-0.411) -- (11.58,-0.417) -- (11.64,-0.419) -- 
+(11.70,-0.416) -- (11.76,-0.409) -- (11.82,-0.397) -- (11.88,-0.381) -- 
+(11.94,-0.362) -- (12.00,-0.339);
+\end{tikzpicture}
+\caption{A plot of the bungee jumping model.}
+\label{fig:bungeeReal}
+\end{figure}
+
+\section{Escaping}
+
+If you ever need to type a reserved character into the actual document, try adding a backslash (``\verb$\$'') before it. For example, to print \verb$%$, type \lstinline$\%$.
+
+(There are other methods.)
+
+\section{Resources}
+
+\begin{itemize}
+\item \url{https://en.wikibooks.org/wiki/LaTeX}
+\item \url{http://tex.stackexchange.com}
+\end{itemize}
 
 % Here ends the document.
 \end{document}
